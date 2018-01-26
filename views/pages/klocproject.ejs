@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+    <% include ../partials/nav.ejs %>
+
+        <div class="container">
+            <h2>KLOC Project</h2>
+        </div>
+        <div>
+
+            <form role="form" id="selectProject" action="/form" method="POST">
+                <h3>Select the Project</h3>
+                <div class="form-group" id="project">
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" value="COOPANS">COOPANS</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" value="4FLIGHT">4FLIGHT</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" value="NEOPTERYX">NEOPTERYX</label>
+                </div>
+                <h3>Select the Version</h3>
+                <div>
+                    <select id="monselect" name="selectVersion">
+                        <option value="IBB1" selected>IBB1</option>
+                        <option value="IBB2">IBB2</option>
+                        <option value="IBB3">IBB3</option>
+                    </select>
+                </div>
+                <input type="submit" value="Select">
+            </form>
+        </div>
+
+</body>
+
+</html>
