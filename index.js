@@ -27,9 +27,9 @@ app.use(bodyParser.json()); // to support JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
 
 app.post('/form', function (req, res) {
-  console.log('selected project is= ' + req.body.optradio);
-  console.log('selected version is= ' + req.body.selectVersion);
-  res.send(req.body.optradio);
+  console.log('selected project is= ' + req.body.selectedProject);
+  console.log('selected version is= ' + req.body.selectedVersion);
+  res.send(req.body.selectedProject + ' - ' + req.body.selectedVersion);
 });
 
 app.listen(PORT, () => {
