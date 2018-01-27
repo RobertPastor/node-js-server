@@ -3,7 +3,36 @@
 
 <head>
     <% include ../partials/header.ejs %>
+        <script type="text/javascript"> 
+            $(document).ready(function () {
+                console.log('document is loaded');
+                console.log(document.querySelector('input[name="selectedProject"]:checked').value);
+                radioClicked();
+            });
 
+
+            function radioClicked() {
+
+                console.log(document.querySelector('input[name="selectedProject"]:checked').value);
+                var selectedProject = document.querySelector('input[name="selectedProject"]:checked').value;
+                var myProjects = JSON.parse('<%- myProjects %>');
+                for (var j = 0; j < myProjects.length; j++) {
+
+                    //console.log(myProjects[j].name);
+                    if (selectedProject == myProjects[j].name) {
+                        console.log("selected project is = " + myProjects[j].name);
+                        $('#selectedVersion').empty();
+                        var versionsArray = myProjects[j].versions;
+                        for (var k = 0; k < versionsArray.length; k++) {
+                            $('#selectedVersion').append($('<option>', {
+                                value: versionsArray[k].version,
+                                text: versionsArray[k].version
+                            }));
+                        }
+                    }
+                }
+            }
+        </script>
 </head>
 
 <body>
@@ -11,54 +40,53 @@
     <% include ../partials/nav.ejs %>
 
         <div class="container">
-            <h2>KLOC Project</h2>
-        </div>
-
-        <% if ( locals.projects) { %>
             <h2>Select the Project</h2>
-            <form role="form" id="selectProject" action="/form" method="POST">
-                <div class="form-group" id="project">
 
-                    <table name="projects">
-                        <tr>
-                            <% for (var i=0; i < projects.length; i++) {%>
-                                <td>
-                                    <div class="form-group" id="project">
-                                        <% if (i == 0 ) { %>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="selectedProject" value="<%= projects[i].name %>" checked>
-                                                <%= projects[i].name %>
-                                            </label>
-                                            <% } else { %>
-                                                <input type="radio" name="selectedProject" value="<%= projects[i].name %>">
-                                                <%= projects[i].name %>
+            <% if ( locals.projects) { %>
+                <form role="form" id="selectProject" action="/form" method="POST">
+                    <div class="form-group" id="projects">
+
+                        <table name="projects" class="projects" border="1px">
+                            <tr>
+                                <% for (var i=0; i < projects.length; i++) {%>
+                                    <td>
+                                        <div class="form-group" id="project">
+                                            <% if (i == 0 ) { %>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="selectedProject" value="<%= projects[i].name %>" onclick="radioClicked(this)" checked>
+                                                    <%= projects[i].name %>
+                                                </label>
+                                                <% } else { %>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="selectedProject" value="<%= projects[i].name %>" onclick="radioClicked(this)">
+                                                        <%= projects[i].name %>
                                                     </label>
 
                                                     <% } %>
-                                    </div>
+                                        </div>
+                                    </td>
+                                    <% } %>
+                            </tr>
+                        </table>
 
-                                </td>
-                                <% } %>
-                        </tr>
-                    </table>
+                        <h2>Select the version</h2>
 
-                </div>
-            </form>
-
-            <% } %>
+                        <div class="form-group" id="versions">
+                            <select id="selectedVersion" name="selectedVersion">
 
 
-                <h3>Select the Version</h3>
-                <div>
-                    <select id="monselect" name="selectedVersion">
-                        <option value="IBB1" selected>IBB1</option>
-                        <option value="IBB2">IBB2</option>
-                        <option value="IBB3">IBB3</option>
-                    </select>
-                </div>
-                <input type="submit" value="Select">
+                            </select>
+                        </div>
 
-                </div>
+                    </div>
+
+                    <input type="submit" value="Select">
+
+                </form>
+
+                <% } %>
+
+        </div>
 
 </body>
 

@@ -7,9 +7,18 @@ module.exports = function (app) {
         res.render('pages/index');
     });
     app.get('/klocproject', function (req, res) {
-        console.log('received get kloc project');
-        var projects = [{ name: "COOPANS" }, { name: "4FLIGHT" }, { name: "NEOPTERYX" }];
+        //console.log('received get kloc project');
+        var projects = [
+            {
+                name: "COOPANS", versions: [{ version: "COOP-001" }, { version: "COOP-002" }, { version: "COOP-003" }]
+            }, {
+                name: "4FLIGHT", versions: [{ version: "4F-001" }, { version: "4F-002" }, { version: "4F-IBB3" }]
+            }, {
+                name: "NEOPTERYX", versions: [{ version: "NEO-IBB3" }, { version: "NEO-IBB3" }, { version: "NEO-IBB7" }]
+            }
+        ];
         res.locals.projects = projects;
+        res.locals.myProjects = JSON.stringify(projects);
         res.render('pages/klocproject');
 
     });
