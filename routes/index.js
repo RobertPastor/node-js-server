@@ -29,8 +29,15 @@ module.exports = function (app) {
 
     app.post('/form', function (req, res) {
         console.log('selected project is= ' + req.body.selectedProject);
-        console.log('selected version is= ' + req.body.selectedVersion);
-        res.send(req.body.selectedProject + ' - ' + req.body.selectedVersion);
+        console.log('number of version is= ' + req.body.versionNumber);
+        console.log('selected version Init is= ' + req.body.selectedVersionInit);
+        if (String(req.body.versionNumber) == "2") {
+            console.log('selected version Final is= ' + req.body.selectedVersionFinal);
+            res.send(req.body.selectedProject + ' - ' + req.body.selectedVersionInit + ' - ' + req.body.selectedVersionFinal);
+
+        } else {
+            res.send(req.body.selectedProject + ' - ' + req.body.selectedVersionInit);
+        }
     });
 
 }

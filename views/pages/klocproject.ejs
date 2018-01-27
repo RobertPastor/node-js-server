@@ -7,30 +7,62 @@
             $(document).ready(function () {
                 console.log('document is loaded');
                 console.log(document.querySelector('input[name="selectedProject"]:checked').value);
-                radioClicked();
+                radioProjectClicked();
             });
 
 
-            function radioClicked() {
+            function radioProjectClicked() {
 
                 console.log(document.querySelector('input[name="selectedProject"]:checked').value);
                 var selectedProject = document.querySelector('input[name="selectedProject"]:checked').value;
                 var myProjects = JSON.parse('<%- myProjects %>');
+
+                var oneTwoVersion = document.querySelector('input[name="versionNumber"]:checked').value;
+                console.log("one or two versions= " + String(oneTwoVersion));
+
+                fillVersionSelect(myProjects, selectedProject);
+            }
+
+            function fillVersionSelect(myProjects, selectedProject) {
+
+                var oneTwoVersion = document.querySelector('input[name="versionNumber"]:checked').value;
+                console.log("one or two versions= " + String(oneTwoVersion));
+                if (String(oneTwoVersion) == '1') {
+
+                    fillOneVersion(myProjects, selectedProject, "versionInit");
+                    $("#versionFinal").hide();
+
+                } else {
+                    $("#versionFinal").show();
+                    fillOneVersion(myProjects, selectedProject, "versionInit");
+                    fillOneVersion(myProjects, selectedProject, "versionFinal");
+
+                }
+            }
+
+            function fillOneVersion(myProjects, selectedProject, versionId) {
+
                 for (var j = 0; j < myProjects.length; j++) {
 
                     //console.log(myProjects[j].name);
                     if (selectedProject == myProjects[j].name) {
                         console.log("selected project is = " + myProjects[j].name);
-                        $('#selectedVersion').empty();
+                        $("#" + String(versionId)).empty();
                         var versionsArray = myProjects[j].versions;
                         for (var k = 0; k < versionsArray.length; k++) {
-                            $('#selectedVersion').append($('<option>', {
+                            $("#" + String(versionId)).append($('<option>', {
                                 value: versionsArray[k].version,
                                 text: versionsArray[k].version
                             }));
                         }
                     }
                 }
+            }
+
+            function radioVersionNumberClicked() {
+                console.log("radio number of versions clicked");
+                console.log(document.querySelector('input[name="versionNumber"]:checked').value);
+                radioProjectClicked();
             }
         </script>
 </head>
@@ -40,11 +72,13 @@
     <% include ../partials/nav.ejs %>
 
         <div class="container">
-            <h2>Select the Project</h2>
+
 
             <% if ( locals.projects) { %>
                 <form role="form" id="selectProject" action="/form" method="POST">
                     <div class="form-group" id="projects">
+
+                        <h2>Select the Project</h2>
 
                         <table name="projects" class="projects" border="1px">
                             <tr>
@@ -53,12 +87,12 @@
                                         <div class="form-group" id="project">
                                             <% if (i == 0 ) { %>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="selectedProject" value="<%= projects[i].name %>" onclick="radioClicked(this)" checked>
+                                                    <input type="radio" name="selectedProject" value="<%= projects[i].name %>" onclick="radioProjectClicked(this)" checked>
                                                     <%= projects[i].name %>
                                                 </label>
                                                 <% } else { %>
                                                     <label class="radio-inline">
-                                                        <input type="radio" name="selectedProject" value="<%= projects[i].name %>" onclick="radioClicked(this)">
+                                                        <input type="radio" name="selectedProject" value="<%= projects[i].name %>" onclick="radioProjectClicked(this)">
                                                         <%= projects[i].name %>
                                                     </label>
 
@@ -68,15 +102,43 @@
                                     <% } %>
                             </tr>
                         </table>
+                        <table class="versionNumber" border="1px">
+                            <tr>
+                                <td>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="versionNumber" value="1" onclick="radioVersionNumberClicked(this)" checked>One Version
 
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="versionNumber" value="2" onclick="radioVersionNumberClicked(this)">Two versions
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
                         <h2>Select the version</h2>
+                        <table class="version" border="1px">
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <select id="versionInit" name="selectedVersionInit">
 
-                        <div class="form-group" id="versions">
-                            <select id="selectedVersion" name="selectedVersion">
+
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select id="versionFinal" name="selectedVersionFinal">
 
 
-                            </select>
-                        </div>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
 
                     </div>
 

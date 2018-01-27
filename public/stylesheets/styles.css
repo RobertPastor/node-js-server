@@ -6,3 +6,18 @@
 .form-group {
     text-align: center;
 }
+
+.versionNumber {
+    width: 100%;
+    border: 1px;
+}
+
+.version {
+    width: 100%;
+    border: 1px;
+}
+
+.active {
+    width: 100%;
+    border: 1px;
+}
