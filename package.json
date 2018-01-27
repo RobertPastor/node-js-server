@@ -13,7 +13,8 @@
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "http": "0.0.0"
+    "http": "0.0.0",
+    "require": "^2.4.20"
   },
   "devDependencies": {
     "request": "^2.81.0",
