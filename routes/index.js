@@ -6,6 +6,7 @@ module.exports = function (app) {
         //console.log(req.hostname);
         res.render('pages/index');
     });
+
     app.get('/klocproject', function (req, res) {
         //console.log('received get kloc project');
         var projects = [
@@ -24,6 +25,13 @@ module.exports = function (app) {
     });
     app.get('/about', function (req, res) {
         res.render('pages/about');
+    });
+
+    app.post('/versionInitConfFile', function (req, res, next) {
+        console.log('version init configuration file received');
+    });
+    app.post('/versionFinalConfFile', function (req, res, next) {
+        console.log('version final configuration file received');
     });
 
 

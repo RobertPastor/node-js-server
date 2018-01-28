@@ -21,3 +21,14 @@
     width: 100%;
     border: 1px;
 }
+
+.dropzones {
+    width: 100%;
+    border: 1px;
+}
+
+.submitButton {
+    width: 100%;
+    border: 1px;
+    background-color: : yellow;
+}
