@@ -62,9 +62,14 @@
 
                     fillOneVersion(myProjects, selectedProject, "versionInit");
                     $("#versionFinal").hide();
+                    $("#drop-zone-final").hide();
+                    $("#td-final-version-conf-file").hide();
 
                 } else {
                     $("#versionFinal").show();
+                    $("#drop-zone-final").show();
+                    $("#td-final-version-conf-file").show();
+
                     fillOneVersion(myProjects, selectedProject, "versionInit");
                     fillOneVersion(myProjects, selectedProject, "versionFinal");
 
@@ -176,14 +181,22 @@
 
                 </form>
                 <table class="dropzones" border="1px">
-                    <tr>
-                        <td>
-                            <form action="/versionInitConfFile" class="dropzone" id="drop-zone-init"></form>
-                        </td>
-                        <td>
-                            <form action="/versionFinalConfFile" class="dropzone" id="drop-zone-final"></form>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <td>Initial Version Configuration File</td>
+                            <td id="td-final-version-conf-file">Final Version Configuration File</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form action="/versionInitConfFile" class="dropzone" id="drop-zone-init"></form>
+                            </td>
+                            <td>
+                                <form action="/versionFinalConfFile" class="dropzone" id="drop-zone-final"></form>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <% } %>
