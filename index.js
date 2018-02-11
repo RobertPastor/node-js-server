@@ -7,10 +7,12 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 const routes = require('./routes/index');
 
+
 var app = express();
 var server = http.createServer(app);
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine', 'ejs');
