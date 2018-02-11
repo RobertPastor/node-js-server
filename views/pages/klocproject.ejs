@@ -15,12 +15,14 @@
 
             function initDropZones() {
                 Dropzone.options.dropZoneInitialId = {
+                    dictDefaultMessage: "Please drop your Project Initial Version configuration file here",
                     accept: function (file, done) {
                         console.log("file uploaded");
                         done();
                     },
                     init: function () {
                         this.on("addedfile", function () {
+                            // ensure that only one file is dropped
                             if (this.files[1] != null) {
                                 this.removeFile(this.files[0]);
                             }
@@ -28,31 +30,51 @@
                     },
                     success: function (file, response) {
                         console.log(file.name);
+
+                        // suppress all rows in the body
+                        // Only one file can be droppped in the dropzone
+                        $("#uploadedInitialVersionConfFile > tbody").empty();
 
                         for (var j = 0; j < response.results.length; j++) {
                             var result = response.results[j];
                             console.log(result.originalFileName)
                             for (var k = 0; k < result.lines.length; k++) {
 
-                                $('#uploadedInitialVersionFile > tbody:last-child')
+                                $('#uploadedInitialVersionConfFile > tbody:last-child')
                                     .append($('<tr>')
                                         .append($('<td>')
-                                            .append(String(result.lines[k]))
+                                            .append($('<input>', {
+                                                type: 'text',
+                                                name: 'repository',
+                                                value: String(result.lines[k].repository)
+                                            })
+                                            )
+                                        )
+                                        .append($('<td>')
+                                            .append($('<input>', {
+                                                type: 'text',
+                                                name: 'repository',
+                                                value: String(result.lines[k].tag)
+                                            })
+                                            )
                                         )
                                     )
-
                             }
                         }
 
                     }
                 };
                 Dropzone.options.dropZoneFinalId = {
+                    dictDefaultMessage: "Please drop your Project Final Version configuration file here",
                     accept: function (file, done) {
                         console.log("file uploaded");
                         done();
                     },
                     init: function () {
                         this.on("addedfile", function () {
+                            // Only one file can be droppped in the dropzone
+                            // ensure that only one file is dropped
+
                             if (this.files[1] != null) {
                                 this.removeFile(this.files[0]);
                             }
@@ -60,9 +82,36 @@
                     },
                     success: function (file, response) {
                         console.log(file.name);
+
+                        // suppress all rows in the body
+                        $("#uploadedFinalVersionConfFile > tbody").empty();
+
                         for (var j = 0; j < response.results.length; j++) {
                             var result = response.results[j];
                             console.log(result.originalFileName)
+                            for (var k = 0; k < result.lines.length; k++) {
+
+                                $('#uploadedFinalVersionConfFile > tbody:last-child')
+                                    .append($('<tr>')
+                                        .append($('<td>')
+                                            .append($('<input>', {
+                                                type: 'text',
+                                                name: 'repository',
+                                                value: String(result.lines[k].repository)
+                                            })
+                                            )
+                                        )
+                                        .append($('<td>')
+                                            .append($('<input>', {
+                                                type: 'text',
+                                                name: 'repository',
+                                                value: String(result.lines[k].tag)
+                                            })
+                                            )
+                                        )
+                                    )
+
+                            }
                         }
                     }
                 };
@@ -228,19 +277,36 @@
                                 </form>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <table id="uploadedInitialVersionConfFile" border="1px">
+                                    <thead>
+                                        <th>repository</th>
+                                        <th>TAG</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+
+                                </table>
+                            </td>
+                            <td>
+                                <table id="uploadedFinalVersionConfFile" border="1px">
+                                    <thead>
+                                        <th>repository</th>
+                                        <th>TAG</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+
+                                </table>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
-                <table id="uploadedInitialVersionFile" border="1px">
-                    <thead>
-                        <th>repository</th>
-                        <th>TAG</th>
-                    </thead>
-                    <tbody>
 
-                    </tbody>
-
-                </table>
 
                 <% } %>
 

@@ -25,7 +25,19 @@ function uploadFile(initialFinalFileType, req) {
             result.lines = [];
             stringContent.split(/\r?\n/).forEach(line => {
                 console.log(line);
-                result.lines.push(line);
+
+                if (String(line).trim().startsWith("#") == false) {
+                    if (String(line).trim().length > 0) {
+                        let spacesArray = String(line).trim().split(' ');
+                        let tabArray = String(line).trim().split('\t');
+
+                        let lineElement = {};
+
+                        lineElement.repository = spacesArray[0];
+                        lineElement.tag = spacesArray[1];
+                        result.lines.push(lineElement);
+                    }
+                }
             });
             results.push(result);
         }
