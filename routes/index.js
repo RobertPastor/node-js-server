@@ -48,32 +48,43 @@ module.exports = function (app) {
                 res.render('pages/error');
             } else {
                 console.log(req.files);
-                if ((req.buffer) && (req.buffer.length > 0)) {
-                    req.buffer.array.forEach(element => {
-                        console.log(element)
-                    });
-                }
+                req.files.forEach(file => {
+                    console.log("original file name= " + file.originalname);
+                    console.log(file.mimetype);
+                    if (file.mimetype === 'text/plain') {
+                        let stringContent = String(file.buffer);
+                        console.log(stringContent);
+                        stringContent.split(/\r?\n/).forEach(line => {
+                            console.log(line);
+                        });
+                    }
+                });
             }
+        });
+    });
 
-            // Everything went fine
+    app.post('/versionFinalConfFile/', function (req, res) {
 
-            //console.log(req);
-
-            // var tmp_path = req.file.path;
-            // console.log(tmp_path);
-            // console.log(req.file);
-            // console.log('version initial configuration file received');
-            // /** The original name of the uploaded file stored in the variable "originalname". **/
-            // var target_path = path.resolve('../uploads/', req.file.originalname);
-
-            // /** A better way to copy the uploaded file. **/
-            // var src = fs.createReadStream(tmp_path);
-            // var dest = fs.createWriteStream(target_path);
-            // src.pipe(dest);
-            // src.on('end', function () { res.render('complete'); });
-            // src.on('error', function (err) { res.render('error'); });
-
-            // return res.status(200).send(req.file);
+        console.log(' route is version Final COnf file');
+        upload(req, res, function (err) {
+            if (err) {
+                // An error occurred when uploading
+                console.log("Error - an error occurs - err= " + String(err));
+                res.render('pages/error');
+            } else {
+                console.log(req.files);
+                req.files.forEach(file => {
+                    console.log("original file name= " + file.originalname);
+                    console.log(file.mimetype);
+                    if (file.mimetype === 'text/plain') {
+                        let stringContent = String(file.buffer);
+                        console.log(stringContent);
+                        stringContent.split(/\r?\n/).forEach(line => {
+                            console.log(line);
+                        });
+                    }
+                });
+            }
         });
     });
 
