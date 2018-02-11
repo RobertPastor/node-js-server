@@ -1,16 +1,17 @@
 
-function dropZoneSuccess(uploadedVersionConfFile) {
+function dropZoneSuccess(uploadedVersionConfFileId, response) {
     // suppress all rows in the body
     // Only one file can be droppped in the dropzone
 
-    $("#" + uploadedVersionConfFile + " > tbody").empty();
+    $("#" + uploadedVersionConfFileId + " > tbody").empty();
 
     for (var j = 0; j < response.results.length; j++) {
         var result = response.results[j];
         console.log(result.originalFileName)
+
         for (var k = 0; k < result.lines.length; k++) {
 
-            $('#' + uploadedVersionConfFile + ' > tbody:last-child')
+            $('#' + uploadedVersionConfFileId + ' > tbody:last-child')
                 .append($('<tr>')
                     .append($('<td>')
                         .append($('<input>', {
@@ -51,7 +52,7 @@ function initDropZones() {
         },
         success: function (file, response) {
             console.log(file.name);
-            dropZoneSuccess("uploadedInitialVersionConfFile");
+            dropZoneSuccess("uploadedInitialVersionConfFile", response);
 
         }
     };
@@ -65,7 +66,6 @@ function initDropZones() {
             this.on("addedfile", function () {
                 // Only one file can be droppped in the dropzone
                 // ensure that only one file is dropped
-
                 if (this.files[1] != null) {
                     this.removeFile(this.files[0]);
                 }
@@ -74,7 +74,7 @@ function initDropZones() {
         success: function (file, response) {
             console.log(file.name);
 
-            dropZoneSuccess("uploadedFinalVersionConfFile");
+            dropZoneSuccess("uploadedFinalVersionConfFile", response);
 
         }
     };

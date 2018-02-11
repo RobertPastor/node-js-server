@@ -104,15 +104,17 @@
 
                     </div>
 
-                    <input type="submit" value="Select" class="submitButton">
+                    <div class="submitDivClass">
+                        <input type="submit" id="submitId" value="Add the Project Version(s)" class="submitButton">
+                    </div>
 
                 </form>
 
                 <table class="dropzones" border="1px">
                     <thead>
                         <tr>
-                            <td>Initial Version Configuration File</td>
-                            <td id="td-final-version-conf-file">Final Version Configuration File</td>
+                            <th id="td-initial-version-conf-file">Initial Version Configuration File</th>
+                            <th id="td-final-version-conf-file">Final Version Configuration File</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,6 +128,14 @@
                                 <form action="/versionFinalConfFile" method="POST" id="dropZoneFinalId" class="dropzone">
 
                                 </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="divInitialVersionFileNameId"></div>
+                            </td>
+                            <td>
+                                <div id="divFinalVersionFileNameId"></div>
                             </td>
                         </tr>
                         <tr>
