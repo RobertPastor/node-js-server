@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+    <% include ../partials/nav.ejs %>
+
+        <div class="container">
+
+            <h2>Define a Project Version</h2>
+
+            <% if ( locals.results) { %>
+                <% for (var i=0; i < results.length; i++) {%>
+                    <div>
+                        <%= results[i].originalFileName %>
+                    </div>
+                    <% } %>
+                        <% } %>
+        </div>
+
+</body>
+
+</html>

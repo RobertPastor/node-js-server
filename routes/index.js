@@ -12,18 +12,25 @@ function uploadFile(initialFinalFileType, req) {
 
     console.log("=================================================");
     console.log(" uploading = " + initialFinalFileType);
+    let results = []
     //console.log(req.files);
     req.files.forEach(file => {
         console.log("original file name= " + file.originalname);
         console.log("original file mime type = " + file.mimetype);
+        let result = {};
+        result.originalFileName = file.originalname;
         if (file.mimetype === 'text/plain') {
             let stringContent = String(file.buffer);
-            console.log(stringContent);
+            //console.log(stringContent);
+            result.lines = [];
             stringContent.split(/\r?\n/).forEach(line => {
                 console.log(line);
+                result.lines.push(line);
             });
+            results.push(result);
         }
     });
+    return results;
 }
 
 module.exports = function (app) {
@@ -63,8 +70,10 @@ module.exports = function (app) {
                 // An error occurred when uploading
                 console.log("Error - an error occurs - err= " + String(err));
                 res.render('pages/error');
+                res.end;
             } else {
-                uploadFile("InitialConfFile", req);
+
+                res.json({ results: uploadFile("InitialConfFile", req) });
             }
         });
     });
@@ -77,8 +86,9 @@ module.exports = function (app) {
                 // An error occurred when uploading
                 console.log("Error - an error occurs - err= " + String(err));
                 res.render('pages/error');
+                res.end;
             } else {
-                uploadFile("FinalConfFile", req);
+                res.json({ results: uploadFile("InitialConfFile", req) });
             }
         });
     });

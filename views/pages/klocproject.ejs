@@ -16,7 +16,7 @@
             function initDropZones() {
                 Dropzone.options.dropZoneInitialId = {
                     accept: function (file, done) {
-                        console.log("uploaded");
+                        console.log("file uploaded");
                         done();
                     },
                     init: function () {
@@ -25,11 +25,30 @@
                                 this.removeFile(this.files[0]);
                             }
                         });
+                    },
+                    success: function (file, response) {
+                        console.log(file.name);
+
+                        for (var j = 0; j < response.results.length; j++) {
+                            var result = response.results[j];
+                            console.log(result.originalFileName)
+                            for (var k = 0; k < result.lines.length; k++) {
+
+                                $('#uploadedInitialVersionFile > tbody:last-child')
+                                    .append($('<tr>')
+                                        .append($('<td>')
+                                            .append(String(result.lines[k]))
+                                        )
+                                    )
+
+                            }
+                        }
+
                     }
                 };
                 Dropzone.options.dropZoneFinalId = {
                     accept: function (file, done) {
-                        console.log("uploaded");
+                        console.log("file uploaded");
                         done();
                     },
                     init: function () {
@@ -38,6 +57,13 @@
                                 this.removeFile(this.files[0]);
                             }
                         });
+                    },
+                    success: function (file, response) {
+                        console.log(file.name);
+                        for (var j = 0; j < response.results.length; j++) {
+                            var result = response.results[j];
+                            console.log(result.originalFileName)
+                        }
                     }
                 };
             }
@@ -181,6 +207,7 @@
                     <input type="submit" value="Select" class="submitButton">
 
                 </form>
+
                 <table class="dropzones" border="1px">
                     <thead>
                         <tr>
@@ -194,7 +221,6 @@
                                 <form action="/versionInitialConfFile/" method="POST" id="dropZoneInitialId" class="dropzone">
 
                                 </form>
-
                             </td>
                             <td>
                                 <form action="/versionFinalConfFile" method="POST" id="dropZoneFinalId" class="dropzone">
@@ -203,6 +229,17 @@
                             </td>
                         </tr>
                     </tbody>
+                </table>
+
+                <table id="uploadedInitialVersionFile" border="1px">
+                    <thead>
+                        <th>repository</th>
+                        <th>TAG</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
                 </table>
 
                 <% } %>
