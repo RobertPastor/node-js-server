@@ -8,6 +8,23 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 //const upload = multer({ dest: '../uploads/' })
 
+function uploadFile(initialFinalFileType, req) {
+
+    console.log("=================================================");
+    console.log(" uploading = " + initialFinalFileType);
+    //console.log(req.files);
+    req.files.forEach(file => {
+        console.log("original file name= " + file.originalname);
+        console.log("original file mime type = " + file.mimetype);
+        if (file.mimetype === 'text/plain') {
+            let stringContent = String(file.buffer);
+            console.log(stringContent);
+            stringContent.split(/\r?\n/).forEach(line => {
+                console.log(line);
+            });
+        }
+    });
+}
 
 module.exports = function (app) {
 
@@ -40,50 +57,28 @@ module.exports = function (app) {
 
     app.post('/versionInitialConfFile/', function (req, res) {
 
-        console.log(' route is version Initial COnf file');
+        console.log(' route is version Initial Conf file');
         upload(req, res, function (err) {
             if (err) {
                 // An error occurred when uploading
                 console.log("Error - an error occurs - err= " + String(err));
                 res.render('pages/error');
             } else {
-                console.log(req.files);
-                req.files.forEach(file => {
-                    console.log("original file name= " + file.originalname);
-                    console.log(file.mimetype);
-                    if (file.mimetype === 'text/plain') {
-                        let stringContent = String(file.buffer);
-                        console.log(stringContent);
-                        stringContent.split(/\r?\n/).forEach(line => {
-                            console.log(line);
-                        });
-                    }
-                });
+                uploadFile("InitialConfFile", req);
             }
         });
     });
 
     app.post('/versionFinalConfFile/', function (req, res) {
 
-        console.log(' route is version Final COnf file');
+        console.log(' route is version Final Conf file');
         upload(req, res, function (err) {
             if (err) {
                 // An error occurred when uploading
                 console.log("Error - an error occurs - err= " + String(err));
                 res.render('pages/error');
             } else {
-                console.log(req.files);
-                req.files.forEach(file => {
-                    console.log("original file name= " + file.originalname);
-                    console.log(file.mimetype);
-                    if (file.mimetype === 'text/plain') {
-                        let stringContent = String(file.buffer);
-                        console.log(stringContent);
-                        stringContent.split(/\r?\n/).forEach(line => {
-                            console.log(line);
-                        });
-                    }
-                });
+                uploadFile("FinalConfFile", req);
             }
         });
     });

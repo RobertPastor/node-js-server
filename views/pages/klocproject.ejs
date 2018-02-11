@@ -8,8 +8,39 @@
                 console.log('document is loaded');
                 console.log(document.querySelector('input[name="selectedProject"]:checked').value);
                 radioProjectClicked();
-                //Dropzone.autoDiscover = false;
+                // managing multipe drop zones
+                Dropzone.autoDiscover = true;
+                initDropZones();
             });
+
+            function initDropZones() {
+                Dropzone.options.dropZoneInitialId = {
+                    accept: function (file, done) {
+                        console.log("uploaded");
+                        done();
+                    },
+                    init: function () {
+                        this.on("addedfile", function () {
+                            if (this.files[1] != null) {
+                                this.removeFile(this.files[0]);
+                            }
+                        });
+                    }
+                };
+                Dropzone.options.dropZoneFinalId = {
+                    accept: function (file, done) {
+                        console.log("uploaded");
+                        done();
+                    },
+                    init: function () {
+                        this.on("addedfile", function () {
+                            if (this.files[1] != null) {
+                                this.removeFile(this.files[0]);
+                            }
+                        });
+                    }
+                };
+            }
 
             function radioProjectClicked() {
 
@@ -160,13 +191,13 @@
                     <tbody>
                         <tr>
                             <td>
-                                <form action="/versionInitialConfFile/" method="POST" id="drop-zone-initial" class="dropzone">
+                                <form action="/versionInitialConfFile/" method="POST" id="dropZoneInitialId" class="dropzone">
 
                                 </form>
 
                             </td>
                             <td>
-                                <form action="/versionFinalConfFile" method="POST" id="drop-zone-final" class="dropzone">
+                                <form action="/versionFinalConfFile" method="POST" id="dropZoneFinalId" class="dropzone">
 
                                 </form>
                             </td>
